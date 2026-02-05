@@ -172,7 +172,6 @@
 * allow streams when digital release is within tolerance window ([#658](https://github.com/IbbyLabs/AIOS/issues/658)) ([9ced8ec](https://github.com/IbbyLabs/AIOS/commit/9ced8ec6d9ffffe29496e85cafcc45ff48b58be1))
 * always provide stream data in meta endpoint ([1d317a0](https://github.com/IbbyLabs/AIOS/commit/1d317a05b5297dd1d1d48c63119ab227f6f6b072))
 * always use tcp ([87667f1](https://github.com/IbbyLabs/AIOS/commit/87667f16dbf44b374fc19198b03761b8ce7455c3))
-* always use year from tmdb or tvdb ([b9a2f3c](https://github.com/IbbyLabs/AIOS/commit/b9a2f3cd1473c4b10aa7e1a47ef1c11f0f7a1984))
 * **anime-database:** dont use tmdb episode offset ([3ebfc9b](https://github.com/IbbyLabs/AIOS/commit/3ebfc9ba99343e2a7466c8389dbc68a9078be12e))
 * **anime-database:** enrich mappings where possible ([f31b701](https://github.com/IbbyLabs/AIOS/commit/f31b7019612fa5867c35ab1eb6c8375ced13c48b))
 * **anime-database:** force refresh on failure during load ([bc23628](https://github.com/IbbyLabs/AIOS/commit/bc23628890ba6d5aa77d93e4e738de27b3fc3fdf))
