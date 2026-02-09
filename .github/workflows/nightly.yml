@@ -14,7 +14,7 @@ on:
 jobs:
   release:
     name: release
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'IbbyLabs/AIOS' }}
     runs-on: ubuntu-latest
     permissions:
       actions: write
