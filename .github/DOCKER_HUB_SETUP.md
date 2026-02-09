@@ -29,7 +29,7 @@ Edit `.github/workflows/deploy-docker.yml`:
 
 ### 3.1 Add Docker Hub Login Step
 
-Add the following step after the "Login to GitHub Container Registry" step (after line 37):
+Add the following step immediately after the "Login to GitHub Container Registry" step:
 
 ```yaml
       - name: Login to Docker Hub
@@ -41,7 +41,7 @@ Add the following step after the "Login to GitHub Container Registry" step (afte
 
 ### 3.2 Update Image Tags Calculation
 
-Replace the "Calculate Image Tags" step (lines 45-86) with:
+Replace the entire "Calculate Image Tags" step with the following:
 
 ```yaml
       - name: Calculate Image Tags
@@ -89,7 +89,7 @@ Replace the "Calculate Image Tags" step (lines 45-86) with:
 
 ### 3.3 Update Discord Notification
 
-Update the "View Images" field in the Discord notification (around line 157):
+Update the "View Images" field in the Discord notification step:
 
 ```yaml
                   {
