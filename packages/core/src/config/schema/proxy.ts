@@ -138,6 +138,15 @@ export const proxySchema = {
       requiresRestart: false,
       secret: false,
     },
+    proxySubtitles: {
+      schema: z.union([z.boolean(), z.null()]),
+      default: null,
+      label: 'Default proxy subtitles',
+      description: 'When set, used as the default for proxying subtitle URLs.',
+      env: 'DEFAULT_PROXY_PROXY_SUBTITLES',
+      requiresRestart: false,
+      secret: false,
+    },
   },
   force: {
     enabled: {
@@ -210,6 +219,15 @@ export const proxySchema = {
       label: 'Forced proxied services',
       description: 'List of serviceIds to force-proxy. JSON array of strings.',
       env: 'FORCE_PROXY_PROXIED_SERVICES',
+      requiresRestart: false,
+      secret: false,
+    },
+    proxySubtitles: {
+      schema: z.union([z.boolean(), z.null()]),
+      default: null,
+      label: 'Force proxy subtitles',
+      description: 'Override user choice of whether subtitle URLs are proxied.',
+      env: 'FORCE_PROXY_PROXY_SUBTITLES',
       requiresRestart: false,
       secret: false,
     },

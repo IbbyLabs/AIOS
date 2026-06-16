@@ -25,6 +25,7 @@ type ProxyConfig = {
   publicIp?: string;
   proxiedAddons?: string[];
   proxiedServices?: string[];
+  proxySubtitles?: boolean;
 };
 
 export function ProxyMenu() {
@@ -84,6 +85,7 @@ function Content() {
   const isCredentialsForced = isForced?.credentials !== null;
   const isServicesForced = isForced?.proxiedServices !== null;
   const isProxiedAddonsDisabled = isForced?.disableProxiedAddons;
+  const isSubtitlesForced = isForced?.proxySubtitles !== null;
 
   const selectedProxyDetails = userData.proxy?.id
     ? details[userData.proxy.id]
@@ -292,6 +294,25 @@ function Content() {
               />
               <p className="text-[--muted] text-sm">
                 Only streams from these addons will be proxied
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Switch
+                side="right"
+                label="Proxy Subtitles"
+                value={userData.proxy?.proxySubtitles ?? false}
+                onValueChange={(v) => {
+                  setUserData((prev) => ({
+                    ...prev,
+                    proxy: { ...prev.proxy, proxySubtitles: v },
+                  }));
+                }}
+                disabled={isSubtitlesForced || !userData.proxy?.enabled}
+              />
+              <p className="text-[--muted] text-sm">
+                Rewrite subtitle URLs through the built-in proxy so Stremio can
+                reach internally-hosted subtitle services.
               </p>
             </div>
           </SettingsCard>

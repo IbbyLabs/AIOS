@@ -75,6 +75,7 @@ const statusInfo = async (): Promise<StatusResponse> => {
             : null,
           proxiedServices: appConfig.proxy.force.proxiedServices ?? null,
           disableProxiedAddons: appConfig.proxy.force.disableProxiedAddons,
+          proxySubtitles: appConfig.proxy.force.proxySubtitles ?? null,
         },
       },
       defaults: {
@@ -92,6 +93,7 @@ const statusInfo = async (): Promise<StatusResponse> => {
             ? encryptString(appConfig.proxy.default.credentials).data
             : null,
           proxiedServices: appConfig.proxy.default.proxiedServices ?? null,
+          proxySubtitles: appConfig.proxy.default.proxySubtitles ?? null,
         },
         timeout: appConfig.presets.defaultTimeout ?? null,
       },

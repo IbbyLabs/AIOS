@@ -5,6 +5,7 @@ import {
   Env,
   ExtrasParser,
   makeUrlLogSafe,
+  encryptString,
 } from '../utils/index.js';
 import { config as appConfig } from '../config/index.js';
 import { getAddonName } from '../utils/general.js';
@@ -22,6 +23,7 @@ import type {
   ParsedStream,
   Subtitle,
   AddonCatalog,
+  UserData,
 } from '../db/schemas.js';
 import type { Addon } from '../db/index.js';
 import type { Metadata } from '../metadata/utils.js';
@@ -931,6 +933,75 @@ export async function getMeta(
   return { success: false, data: null, errors };
 }
 
+function proxifySubtitleUrls(
+  subtitles: Subtitle[],
+  userData: UserData
+): Subtitle[] {
+  if (!userData.proxy?.proxySubtitles) return subtitles;
+
+  let credentials: string | undefined;
+  const proxy = userData.proxy;
+  if (proxy.id === 'builtin' && proxy.credentials) {
+    credentials = proxy.credentials;
+  } else {
+    const authEntries = appConfig.bootstrap.auth
+      ? Array.from(appConfig.bootstrap.auth.entries())
+      : [];
+    if (authEntries.length > 0) {
+      credentials = `${authEntries[0][0]}:${authEntries[0][1]}`;
+    }
+  }
+
+  if (!credentials) {
+    logger.warn(
+      'proxySubtitles is enabled but no builtin proxy credentials are available'
+    );
+    return subtitles;
+  }
+
+  const [username, ...rest] = credentials.split(':');
+  const password = rest.join(':');
+  const baseUrl = appConfig.bootstrap.baseUrl;
+
+  const { success: authOk, data: encryptedAuth } = encryptString(
+    JSON.stringify({ username, password })
+  );
+  if (!authOk || !encryptedAuth) {
+    logger.error('failed to encrypt subtitle proxy auth');
+    return subtitles;
+  }
+
+  let baseHost: string;
+  try {
+    baseHost = new URL(baseUrl).host;
+  } catch {
+    logger.error({ baseUrl }, 'invalid baseUrl for subtitle proxification');
+    return subtitles;
+  }
+
+  return subtitles.map((subtitle) => {
+    if (!subtitle.url) return subtitle;
+    try {
+      if (new URL(subtitle.url).host === baseHost) return subtitle;
+    } catch {
+      return subtitle;
+    }
+
+    const { success: dataOk, data: encryptedData } = encryptString(
+      JSON.stringify({ url: subtitle.url })
+    );
+    if (!dataOk || !encryptedData) {
+      logger.error({ url: subtitle.url }, 'failed to encrypt subtitle proxy data');
+      return subtitle;
+    }
+
+    return {
+      ...subtitle,
+      url: `${baseUrl}/api/v1/proxy/e.${encryptedAuth}.${encryptedData}/subtitle`,
+    };
+  });
+}
+
 export async function getSubtitles(
   ctx: AIOStreamsContext,
   type: string,
@@ -967,6 +1038,8 @@ export async function getSubtitles(
       }
     })
   );
+
+  allSubtitles = proxifySubtitleUrls(allSubtitles, ctx.userData);
 
   return { success: true, data: allSubtitles, errors };
 }

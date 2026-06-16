@@ -505,6 +505,8 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
           forced.proxy.credentials ?? defaults.proxy?.credentials ?? undefined,
         proxiedServices:
           forced.proxy.proxiedServices ?? defaults.proxy?.proxiedServices ?? [],
+        proxySubtitles:
+          forced.proxy.proxySubtitles ?? defaults.proxy?.proxySubtitles ?? undefined,
       };
 
       newData.services = (newData.services ?? []).map((service) => {
