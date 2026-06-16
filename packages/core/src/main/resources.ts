@@ -12,6 +12,7 @@ import { Wrapper } from './wrapper.js';
 import { PresetManager } from '../presets/index.js';
 import { FeatureControl } from '../utils/feature.js';
 import { StreamContext, StreamUtils } from '../streams/index.js';
+import { createProxy } from '../proxy/index.js';
 import { populateNzbFallbacks } from './nzbFailover.js';
 import { resolveServiceWrappedStreams } from './serviceWrapper.js';
 import type { ServiceWrapServiceTiming } from './serviceWrapper.js';
@@ -967,6 +968,23 @@ export async function getSubtitles(
       }
     })
   );
+
+  if (ctx.userData.proxy?.enabled && allSubtitles.length > 0) {
+    try {
+      const proxy = createProxy(ctx.userData.proxy);
+      const proxiedUrls = await proxy.generateUrls(
+        allSubtitles.map((s) => ({ url: s.url, filename: 'subtitle' }))
+      );
+      if (proxiedUrls && !('error' in proxiedUrls)) {
+        allSubtitles = allSubtitles.map((s, i) => ({
+          ...s,
+          url: proxiedUrls[i] ?? s.url,
+        }));
+      }
+    } catch (err) {
+      logger.warn({ err }, 'failed to proxy subtitle urls');
+    }
+  }
 
   return { success: true, data: allSubtitles, errors };
 }
