@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.9.0](https://github.com/IbbyLabs/AIOS/compare/seanime-extensions-v0.8.3...seanime-extensions-v0.9.0) (2026-07-01)
+
+
+### Features
+
+* **seanime-extensions/aiostreams-plugin:** register entry episode tab ([9109cf1](https://github.com/IbbyLabs/AIOS/commit/9109cf1af6fb022d1a817663219032e365e87515))
+* **seanime-extensions/aiostreams-plugin:** use torrent stream APIs for P2P streams ([9109cf1](https://github.com/IbbyLabs/AIOS/commit/9109cf1af6fb022d1a817663219032e365e87515))
+
+
+### Bug Fixes
+
+* **seanime-extensions/aiostreams-plugin:** add version check ([db6e5e4](https://github.com/IbbyLabs/AIOS/commit/db6e5e4fd91fc761d7692b37978d4d0dac6934ff))
+* **seanime-extensions/aiostreams-plugin:** adjust overview/details card styling to match stream cards ([0de2a55](https://github.com/IbbyLabs/AIOS/commit/0de2a55443f8d240994cfcc350291615e50275df))
+* **seanime-extensions/aiostreams-plugin:** assume no prefix is tracker when building magnet ([65e6d78](https://github.com/IbbyLabs/AIOS/commit/65e6d78089d264bd367b7c54d12af4f98b3cb033))
+* **seanime-extensions/aiostreams-plugin:** handle tracker: prefix in sources when building magnet ([9109cf1](https://github.com/IbbyLabs/AIOS/commit/9109cf1af6fb022d1a817663219032e365e87515))
+* **seanime-extensions/aiostreams-plugin:** open externalUrl links in browser ([9109cf1](https://github.com/IbbyLabs/AIOS/commit/9109cf1af6fb022d1a817663219032e365e87515))
+* **seanime-extensions/aiostreams-plugin:** prefer meta type for mediaType from stremio custom source ([b28201b](https://github.com/IbbyLabs/AIOS/commit/b28201bc8943b96252228cb33c5ff362e7fb215c))
+* **seanime-extensions/stremio-custom-source:** handle non-series videos (e.g. movie collections) ([b28201b](https://github.com/IbbyLabs/AIOS/commit/b28201bc8943b96252228cb33c5ff362e7fb215c)), closes [#930](https://github.com/IbbyLabs/AIOS/issues/930)
+* **seanime-extensions:** prefer tvdb over trakt for season number ([81093f5](https://github.com/IbbyLabs/AIOS/commit/81093f5f629d6b3f3b7c87056aec5fb8bd5020f8))
+
 ## [0.8.3](https://github.com/Viren070/AIOStreams/compare/seanime-extensions-v0.8.2...seanime-extensions-v0.8.3) (2026-06-11)
 
 
